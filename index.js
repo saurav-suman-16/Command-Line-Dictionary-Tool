@@ -1,8 +1,16 @@
 #!/usr/bin/env node
 const { apiKey } = require("./config.json");
-const { getRandomWord, getDefinition, getRelatedWords, getExamples, getAllData, play } = require("./commands")(apiKey);
+const playGame = require("./play");
+const { getRandomWord, getDefinition, getRelatedWords, getExamples, getAllData, play } = require("./commands")({
+  apiKey,
+  playGame
+});
 
 const processArgs = async () => {
+  // Get the arguments being given.
+  const args = process.argv;
+  // Remove the first two arguments as exec path and file path are not required
+  args.splice(0, 2);
   if (!args.length) {
     //If no argument is passed then get a random word with all the info.
     await getRandomWord();
@@ -31,8 +39,4 @@ const processArgs = async () => {
   }
 };
 
-// Get the arguments being given.
-const args = process.argv;
-// Remove the first two arguments as exec path and file path are not required
-args.splice(0, 2);
 processArgs();
