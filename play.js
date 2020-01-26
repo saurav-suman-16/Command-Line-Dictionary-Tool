@@ -61,9 +61,9 @@ const getRandomHint = ({ first }) => {
 const offerChoices = async ({ question, params }) => {
   const { choice } = await inquirer.prompt([
     {
-      type: "rawlist",
+      type: "list",
       name: "choice",
-      message: "Choose one of the following to continue.",
+      message: "Choose one of the following to continue.(Use K and J if having issue with arrow keys.)",
       choices: ["Try Again", "Hint", "Quit"]
     }
   ]);
@@ -98,13 +98,16 @@ const start = async ({ first, ...params }) => {
   }
   let question = hint;
   if (hintType === "ant") {
-    question = "Antonym of " + hint;
+    question = "Antonym of: " + hint;
   }
   if (hintType === "syn") {
-    question = "Synonym of " + hint;
+    question = "Synonym of: " + hint;
   }
   if (hintType === "jumbled") {
-    question = "Jumbled word " + hint;
+    question = "Jumbled word: " + hint;
+  }
+  if (hintType === "definitions") {
+    question = "Can be defined as: " + hint;
   }
   return await askQuestion({ question, params });
 };
